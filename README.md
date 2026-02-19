@@ -1,52 +1,54 @@
-## Posture Monitor
+# Posture Monitor
 
-This is a small Python tool that uses your webcam and the Gemini API to detect when you are slouching and give real‑time posture feedback.
+A real-time posture detection tool that uses your webcam and MediaPipe to detect when you are slouching and give live feedback — no API key required, runs fully offline.
 
-### Features
+## How it works
 
-- **Webcam posture detection**: Periodically sends frames from your camera to a Gemini model.
-- **Slouching vs upright classification**: The model classifies your current posture and returns a confidence score.
-- **Live overlay**: An OpenCV window displays your camera feed with posture status and short coaching tips.
+MediaPipe detects key landmarks on your face and shoulders every 2 seconds. The tool measures how high your nose and ears sit above your shoulder line (normalized by shoulder width) to determine whether you are sitting upright or slouching. The thresholds are calibrated for a standard laptop front-facing camera.
 
-### Setup
+## Features
 
-1. **Create and activate a virtual environment** (optional but recommended).
-2. **Install dependencies**:
+- **Real-time detection** — analyzes your posture every 2 seconds using your webcam
+- **Skeleton overlay** — color-coded dots and lines on your nose, ears, and shoulders with a glow effect
+- **Posture bar** — a GOOD → BAD bar showing your current slouch score at a glance
+- **Duration timer** — shows how long you've held the current posture
+- **Corner bracket border** — pulses red when slouching, solid green when upright
+- **Advice strip** — coaching tip at the bottom of the frame
+- **Fully offline** — no API calls, everything runs locally
 
+## Setup
+
+1. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Set your Gemini API key**:
-
+2. **Run**:
    ```bash
-   export GEMINI_API_KEY="your_api_key_here"
+   python posture_monitor.py
    ```
 
-4. (Optional) Configure behavior via environment variables:
+The pose model (`pose_landmarker_full.task`) is downloaded automatically on first run (~30 MB).
 
-   - **`GEMINI_MODEL_NAME`**: Model to use (default: `gemini-2.5-flash`).
-   - **`POSTURE_ANALYSIS_INTERVAL_SECS`**: Seconds between posture checks (default: `2.0`).
-   - **`POSTURE_MAX_ANALYSIS_WIDTH`**: Max width (in pixels) used when resizing frames before sending them to the model (default: `640`).
+## Usage
 
-### Usage
+- A window titled `Posture Monitor` will open showing your webcam feed
+- Sit with your **head and shoulders clearly visible** to the camera
+- **Green** = upright, **Red** = slouching, **Yellow** = calibrating
+- Press `q` to quit
 
-Run the posture monitor from the project directory:
+## Configuration
 
-```bash
-python posture_monitor.py
-```
+You can tweak behavior via environment variables:
 
-- A window titled `Posture Monitor` will open showing your webcam feed.
-- The overlay at the top will indicate:
-  - **Posture**: `UPRIGHT`, `SLOUCHING`, or `UNKNOWN`.
-  - **Confidence**: Model confidence as a percentage.
-  - **Advice**: Short text tips on how to improve or maintain your posture.
-- Press `q` to exit.
+| Variable | Default | Description |
+|---|---|---|
+| `POSTURE_ANALYSIS_INTERVAL_SECS` | `2.0` | Seconds between posture checks |
+| `POSTURE_MAX_ANALYSIS_WIDTH` | `640` | Max frame width sent to the model |
+| `POSTURE_SMOOTHING_WINDOW` | `4` | Number of readings used for smoothing |
 
-### Notes
+## Requirements
 
-- The script mirrors the webcam feed horizontally to feel more natural.
-- Frames are resized before being sent to the model to reduce bandwidth and latency.
-- If there is an API error, the last known posture state is kept and the advice field is updated with an error message.
-
+- Python 3.8+
+- Webcam
+- macOS / Linux / Windows
