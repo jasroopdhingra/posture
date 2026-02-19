@@ -1,0 +1,4 @@
+opencv-python
+google-genai
+mediapipe==0.9.3.0
+
