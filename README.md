@@ -14,7 +14,6 @@ MediaPipe detects key landmarks on your face and shoulders every 2 seconds. The 
 - **Duration timer** — shows how long you've held the current posture
 - **Corner bracket border** — pulses red when slouching, solid green when upright
 - **Advice strip** — coaching tip at the bottom of the frame
-- **Fully offline** — no API calls, everything runs locally
 
 ## Setup
 
@@ -32,7 +31,7 @@ The pose model (`pose_landmarker_full.task`) is downloaded automatically on firs
 
 ## Usage
 
-- A window titled `Posture Monitor` will open showing your webcam feed
+- A window titled `Posture Monitor` will open, showing your webcam feed
 - Sit with your **head and shoulders clearly visible** to the camera
 - **Green** = upright, **Red** = slouching, **Yellow** = calibrating
 - Press `q` to quit
