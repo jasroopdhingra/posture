@@ -1,0 +1,20 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# MediaPipe model file (large binary, downloaded automatically at runtime)
+pose_landmarker_full.task
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.cursor
