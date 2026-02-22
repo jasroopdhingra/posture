@@ -1,61 +1,42 @@
 # Posture Monitor
 
-A real-time posture detection tool that uses your webcam and MediaPipe to detect when you are slouching and give live feedback — no API key required, runs fully offline.
+Real-time posture detection using your webcam. Detects slouching and gives live feedback — no API key, runs fully offline.
 
-## How it works
+## Setup (one time)
 
-MediaPipe detects key landmarks on your face and shoulders every 2 seconds. The tool measures how high your nose and ears sit above your shoulder line (normalized by shoulder width) to determine whether you are sitting upright or slouching. The thresholds are calibrated for a standard laptop front-facing camera.
+You need Python 3 installed. [Download it here](https://www.python.org/downloads/) if you don't have it.
+
+Open Terminal and run:
+
+```bash
+# 1. Download the project
+git clone https://github.com/jasroopdhingra/posture.git
+cd posture
+
+# 2. Install dependencies
+pip3 install -r requirements.txt
+```
+
+> The pose model (~30 MB) downloads automatically the first time you run the app.
+
+## Run it
+
+```bash
+python3 posture_monitor.py
+```
+
+A window will open showing your webcam feed. Press `q` to quit.
+
+## Tips
+
+- Sit so your **head and shoulders are fully visible** to the camera
+- **Green** = good posture · **Red** = slouching · **Yellow** = calibrating
+- Takes ~4 seconds to calibrate on first launch
 
 ## Features
 
-- **Real-time detection** — analyzes your posture every 2 seconds using your webcam
-- **Skeleton overlay** — color-coded dots and lines on your nose, ears, and shoulders with a glow effect
-- **Posture bar** — a GOOD → BAD bar showing your current slouch score at a glance
-- **Duration timer** — shows how long you've held the current posture
-- **Corner bracket border** — pulses red when slouching, solid green when upright
-- **Advice strip** — coaching tip at the bottom of the frame
-
-## Download (no Python required)
-
-1. Go to the [Releases](../../releases) page
-2. Download `PostureMonitor-macOS.zip` from the latest release
-3. Unzip and double-click `PostureMonitor` to run
-
-> The pose model (~30 MB) is downloaded automatically on first launch.
-
-## Run from source
-
-1. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Run**:
-   ```bash
-   python posture_monitor.py
-   ```
-
-The pose model (`pose_landmarker_full.task`) is downloaded automatically on first run (~30 MB).
-
-## Usage
-
-- A window titled `Posture Monitor` will open, showing your webcam feed
-- Sit with your **head and shoulders clearly visible** to the camera
-- **Green** = upright, **Red** = slouching, **Yellow** = calibrating
-- Press `q` to quit
-
-## Configuration
-
-You can tweak behavior via environment variables:
-
-| Variable | Default | Description |
-|---|---|---|
-| `POSTURE_ANALYSIS_INTERVAL_SECS` | `2.0` | Seconds between posture checks |
-| `POSTURE_MAX_ANALYSIS_WIDTH` | `640` | Max frame width sent to the model |
-| `POSTURE_SMOOTHING_WINDOW` | `4` | Number of readings used for smoothing |
-
-## Requirements
-
-- Python 3.8+
-- Webcam
-- macOS / Linux / Windows
+- Skeleton overlay with color-coded dots on your nose, ears, and shoulders
+- Posture bar showing your current slouch score (GOOD → BAD)
+- Duration timer showing how long you've held the current posture
+- Pulsing red border when slouching, solid green when upright
+- Coaching tip at the bottom of the frame
