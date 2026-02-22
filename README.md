@@ -15,7 +15,15 @@ MediaPipe detects key landmarks on your face and shoulders every 2 seconds. The 
 - **Corner bracket border** — pulses red when slouching, solid green when upright
 - **Advice strip** — coaching tip at the bottom of the frame
 
-## Setup
+## Download (no Python required)
+
+1. Go to the [Releases](../../releases) page
+2. Download `PostureMonitor-macOS.zip` from the latest release
+3. Unzip and double-click `PostureMonitor` to run
+
+> The pose model (~30 MB) is downloaded automatically on first launch.
+
+## Run from source
 
 1. **Install dependencies**:
    ```bash

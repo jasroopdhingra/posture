@@ -1,0 +1,48 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-macos:
+    name: Build macOS App
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build standalone app
+        run: |
+          pyinstaller \
+            --onefile \
+            --name PostureMonitor \
+            --hidden-import mediapipe \
+            --hidden-import cv2 \
+            posture_monitor.py
+
+      - name: Package as zip
+        run: |
+          cd dist
+          zip -r PostureMonitor-macOS.zip PostureMonitor
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/PostureMonitor-macOS.zip
+          generate_release_notes: true
